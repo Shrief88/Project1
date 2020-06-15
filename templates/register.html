@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{%block tilt%}
+    register
+{%endblock%}
+
+{%block head%}
+   <link rel="stylesheet" href="{{ url_for('static',filename='styles/style1.css') }}">
+{%endblock%}
+
+{% block body %}
+<form action="/register" method="POST">
+    <div class="form-group">
+        <label for="exampleInputEmail1" class="font">Name</label>
+        <input type="text" class="form-control" name="name" id="exampleInputEmail1" aria-describedby="emailHelp">
+      </div>
+    <div class="form-group">
+      <label for="exampleInputEmail1" class="font">Email address</label>
+      <input type="email" class="form-control" name= "email" id="exampleInputEmail1" aria-describedby="emailHelp">
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1" class="font">Password</label>
+      <input type="password" class="form-control" name="password" id="exampleInputPassword1">
+    </div>
+    <div class="form-group form-check">
+      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+      <label class="form-check-label" for="exampleCheck1">keep me logged in</label>
+    </div>
+    <div class="col">
+        <button type="submit" class="btn btn-primary">Sign up</button>
+      </div>
+</form>
+{% endblock %}

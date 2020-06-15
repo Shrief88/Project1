@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Book
+{% endblock %}
+{%block head%}
+   <link rel="stylesheet" href="{{ url_for('static',filename='styles/style3.css') }}">
+{%endblock%}
+
+{% block body %}
+<nav class="navbar navbar-expand-md navbar-light bg-light">
+    <a class="navbar-brand" href="/search">
+        <img src="../static/img/icon.png" width="30" height="30" alt="" loading="lazy"> GoodReads</a>
+   
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+               <h5><a class="nav-link" href="/logout">Log out</a> </h5> 
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+
+<div class="row book-container">
+    <div class="col-sm-4">
+        <img src="http://covers.openlibrary.org/b/isbn/{{res.isbn}}-M.jpg" id="book" width="130px">    
+    </div>
+    <div class="col-sm-4">
+        <h1 class="card-title">{{book[0].title}}</h1>
+        <h5 class="card-text">author: {{book[0].author}}</h5>
+        <h5 class="card-text">Published: {{book[0].year}}</h5>
+        <h5 class="card-text">Isbn:{{book[0].isbn}}</h5>  
+    </div>
+    <div class="col-sm-4">
+        <img class="mb-3" src="../static/img/goodreads.jpg" alt="Goodreads" width="200" height="45">
+        <h5>Nº of Ratings: {{res.work_ratings_count}}</h5>
+        <h5>Average Rating: {{res.average_rating}}</h5>
+        <h5>
+            <a href="https://www.goodreads.com/search?q={{book[0].title}}">Goodreads page</a>
+        </h5>
+    </div>
+</div>    
+
+<hr>
+
+<form class="form-group" method="POST" action="{{ url_for('book',book_isbn = book[0].isbn)}}">
+    <label for="exampleFormControlTextarea1">Typr your Review and Rating: </label>
+    <textarea class="form-control" name="review" id="exampleFormControlTextarea1" rows="3"></textarea>
+    <select class="custom-select" name="rating" id="inputGroupSelect02">
+        <option selected disabled>Choose Rating</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+    </select>
+    <button class="btn btn-primary" id="submit" type="submit">Submit</button>
+</form>
+
+<hr>
+
+<h4>Reviews from Other users: </h4>
+
+{% for review in reviews %}
+  
+<textarea class="form-control" name="review" id="exampleFormControlTextarea1" rows="5" disabled>
+from user ({{user_name}}) :
+{{review.body}}
+
+Rating: {{review.rating}}
+</textarea>
+
+{% endfor %}
+{% endblock %}

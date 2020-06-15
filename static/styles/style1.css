@@ -1,0 +1,32 @@
+body{
+    background-image: url(../img/login.jpg)
+}
+
+
+.container{
+    background-color: rgba(255, 177, 0, 0.5);
+    border: 1px groove;
+    margin-top: 15%;
+    width: 30%;
+    padding-bottom: 1% ;
+    padding-top: 0.5%; 
+}
+
+.btn.btn-primary{
+    margin-left: 40%;
+    margin-top: 2.2%;
+}
+
+.font{
+    color:  #393399;
+    font: italic bold 16px/32px Georgia, serif;
+}
+
+.form-check-label{
+    color:  #393399;
+    font: italic bold 16px/32px Georgia, serif;
+}
+
+.form-check-input{
+    margin-top: 2.2%;
+}

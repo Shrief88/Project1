@@ -1,0 +1,23 @@
+body{
+    background-image: url(../img/home.jpg)
+}
+
+.nav-link{
+    font-size: large;
+}
+
+.form-control.mr-sm-2{
+    width: 60%;
+}
+
+.form-inline.mr-auto{
+    margin-top: 25%;
+    
+    margin-left: 25%;
+    
+}
+
+.collapse.navbar-collapse{
+    margin-left: 75%;
+    width: 10%;
+  }

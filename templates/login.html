@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{%block tilt%}
+   Log in
+{%endblock%}
+
+{%block head%}
+   <link rel="stylesheet" href="{{ url_for('static',filename='styles/style1.css') }}">
+{%endblock%}
+
+{% block body %}
+<form action="/login" method="POST">
+    <div class="form-group">
+      <label for="exampleInputEmail1" class="font" >Email address</label>
+      <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1" class="font">Password</label>
+      <input type="password" name="password" class="form-control" id="exampleInputPassword1">
+    </div>
+    <small id="emailHelp" class="form-text text-muted"><a href='register' style="color:#393399">Not a member? you can sign up from here</a></small>
+    <div class="col">
+      <button type="submit" class="btn btn-primary">Log in</button>
+    </div>
+</form>
+{% endblock %}
