@@ -7,15 +7,15 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 # Check for environment variable
-if not os.getenv("DATABASE_URL"):
-   raise RuntimeError("DATABASE_URL is not set")
+#if not os.getenv("DATABASE_URL"):
+#   raise RuntimeError("DATABASE_URL is not set")
 
 app = Flask(__name__)
 # Configure session to use filesystem
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
-engine = create_engine(os.getenv("DATABASE_URL"))
+engine = create_engine("postgres://ijionxqqbadvfc:94f779624969db0fd8bcd094b485e4bd5197d0e9f24f8dbabcdd6a9dcafc944c@ec2-52-87-135-240.compute-1.amazonaws.com:5432/depl9ide9dik0r")
 db = scoped_session(sessionmaker(bind=engine))
 
 @app.route("/")
@@ -39,10 +39,10 @@ def login():
             return render_template("error.html", message="Password is incorrect")
         session['user_id'] = user[0].id
         session["user_name"] = user[0].name
-        return redirect("/search")
+        return redirect("/search" )
     else :
         if 'user_id' in session:
-            return redirect("/search")
+            return redirect("/search" )
         return render_template("login.html")
 
 
@@ -78,7 +78,7 @@ def search():
         return render_template("results.html", books=books , book=book)    
     else:
         if 'user_id' in session:
-            return render_template("index.html")
+            return render_template("index.html" , user_name = session["user_name"])
         return redirect("/login")      
 
 @app.route("/logout")
@@ -108,7 +108,7 @@ def book(book_isbn):
           db.execute("INSERT INTO reviews(body,user_id,book_id,rating)VALUES(:body,:user_id,:book_id,:rating)",{"body":body,"user_id":user_id,"book_id":book_id,"rating":rating}) 
           db.commit()
           return redirect(url_for('book',book_isbn = book_isbn))
-    KEY = os.getenv("Key")
+    KEY = "fX6308bR8BeCJQH44PoRg"
     res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": KEY, "isbns": book_isbn})
     res = res.json()
     res = res['books'][0]
