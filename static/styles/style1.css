@@ -14,10 +14,18 @@ html, body  {
 
 /*****************header***********************/
 
-.bg-light{
+.nav{
     background-color:#e9ecef!important ;
     height: 70px;
 }
+.navbar-brand{
+    line-height: 50px;
+}
+
+.nav-link{
+    float: right;
+}
+
 
 
 
@@ -73,13 +81,13 @@ html, body  {
 }
 
 .footer .row{
-    width: 200px;
+    width: 232px;
     margin: 20px auto;
 }
 
 .footer img{
     width: 50px;
-    padding: 3px;
+    margin: 0px 4px;
     
 }
 

@@ -1,5 +1,5 @@
 body{
-    background-image: url(../img/home.jpg)
+   
 }
 
 .nav-link{
@@ -11,7 +11,17 @@ body{
 }
 
 .form-inline.mr-auto{
-    margin-top: 25%;
-    margin-left: 25%;
+   width: 300px;
+   margin: 150px auto;
+}
+
+.form-control.mr-sm-2{
+    width: 200px;
+}
+
+.btn{
+    width: 80px;
+    
+
 }
 
