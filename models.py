@@ -11,14 +11,19 @@ class Book(db.Model):
     id = db.Column(db.Integer,primary_key=True) 
     isbn = db.Column(db.String(10),unique=True,nullable=False)
     title = db.Column(db.String(100),nullable=False)
-    author = db.Column(db.String(100), nullable=False)
-    year = db.Column(db.String(6), nullable=False)
+    author_id = db.Column(db.Integer,db.ForeignKey("author_id"),nullable=False)
+    year = db.Column(db.String(4), nullable=False)
+
+class Autor(db.Model):
+    __tablename__="authors"
+    id = db.Column(db.Integer,perimary_key=True)
+    name = db.Column(db.String(100),nullable=False)
 
 
 class User(db.Model):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)  
+    username = db.Column(db.String(100), nullable=False)  
     email = db.Column(db.String(100), unique = True, nullable=False)  
     password = db.Column(db.String(100), nullable=False) 
 

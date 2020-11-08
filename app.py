@@ -8,14 +8,15 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 
 # Check for environment variable
 #if not os.getenv("DATABASE_URL"):
-#   raise RuntimeError("DATABASE_URL is not set")
+ #  raise RuntimeError("DATABASE_URL is not set")
 
 app = Flask(__name__)
 # Configure session to use filesystem
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
-engine = create_engine("postgres://ijionxqqbadvfc:94f779624969db0fd8bcd094b485e4bd5197d0e9f24f8dbabcdd6a9dcafc944c@ec2-52-87-135-240.compute-1.amazonaws.com:5432/depl9ide9dik0r")
+#engine = create_engine("DATABASE_URL")
+engine = create_engine("postgres://ijionxqqbadvfc:94f779624969db0fd8bcd094b485e4bd5197d0e9f24f8dbabcdd6a9dcafc944c@ec2-52-87-135-240.compute-1.//amazonaws.com:5432/depl9ide9dik0r")
 db = scoped_session(sessionmaker(bind=engine))
 
 @app.route("/")
@@ -116,4 +117,4 @@ def book(book_isbn):
     return render_template("book.html", book=book , res=res , reviews=reviews , user_name=session["user_name"], user_id =session['user_id'])
 
 
-
+app.run(debug=True)

@@ -1,32 +1,99 @@
-body{
-    background-image: url(../img/login.jpg)
+* {
+    margin: 0;
+    padding: 0;
 }
 
+html, body  {
+    width: 100%;
+    height: 100%;
+}
 
 .container{
-    background-color: rgba(255, 177, 0, 0.5);
-    border: 1px groove;
-    margin-top: 15%;
-    width: 30%;
-    padding-bottom: 1% ;
-    padding-top: 0.5%; 
+    min-height: 100%;
 }
 
-.btn.btn-primary{
-    margin-left: 40%;
-    margin-top: 2.2%;
+/*****************header***********************/
+
+.bg-light{
+    background-color:#e9ecef!important ;
+    height: 70px;
 }
 
-.font{
-    color:  #393399;
-    font: italic bold 16px/32px Georgia, serif;
+
+
+
+/*****************main***********************/
+
+.main{
+    overflow: auto;
+    padding-bottom: 120px;
 }
 
-.form-check-label{
-    color:  #393399;
-    font: italic bold 16px/32px Georgia, serif;
+.form_control{
+    display: block;
+    height: 340px;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    padding : 20px 12px;
+    border-radius: 25px;
+    border: 2px solid #73AD21;
+    background-color: #dee2e685;
 }
 
-.form-check-input{
-    margin-top: 2.2%;
+.form_control p{
+    margin-top: 15px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
 }
+
+@media only screen and (min-width: 1024px) {
+    .form_control{
+        width: 500px; 
+        margin: 120px auto;
+    } 
+}
+
+
+/***************footer************************/
+.footer{
+    display: block;
+    background-color:#e9ecef;
+    height: 120px;
+    margin-top: -120px;
+    position: relative;
+    clear: both;
+}
+
+.footer p{
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    padding-top: 10px;
+}
+
+.footer .row{
+    width: 200px;
+    margin: 20px auto;
+}
+
+.footer img{
+    width: 50px;
+    padding: 3px;
+    
+}
+
+@media only screen and (min-width: 600px) {
+    .footer .row{
+        width: 360px;
+    }
+  .footer img{
+    margin: 0px 20px;  
+   }  
+}
+    
+
+
+
+
+
