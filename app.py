@@ -10,12 +10,11 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 #if not os.getenv("DATABASE_URL"):
  #  raise RuntimeError("DATABASE_URL is not set")
 
-app = Flask(__name__)
 # Configure session to use filesystem
+app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
-#engine = create_engine("DATABASE_URL")
 engine = create_engine("postgres://ijionxqqbadvfc:94f779624969db0fd8bcd094b485e4bd5197d0e9f24f8dbabcdd6a9dcafc944c@ec2-52-87-135-240.compute-1.amazonaws.com:5432/depl9ide9dik0r")
 db = scoped_session(sessionmaker(bind=engine))
 
@@ -27,11 +26,11 @@ def index():
 def login():
     if request.method == "POST" :
         session.clear()
-        email = request.form.get("email")
+        username = request.form.get("username")
         password = request.form.get("password")
-        if not email or not password :
+        if not username or not password :
             return render_template("error.html", message="must provide all required information")
-        check =  db.execute("SELECT COUNT(*) FROM users WHERE email = :email",{"email": email})
+        check =  db.execute("SELECT COUNT(*) FROM users WHERE username = :username",{"username": username})
         if check == 0:
             return render_template("error.html", message="You Must sign up First")   
         user = db.execute("SELECT * FROM users WHERE email = :email",{"email": email})
@@ -51,15 +50,17 @@ def login():
 def register():
     session.clear()
     if request.method == "POST" :
-        name = request.form.get("name")
-        email = request.form.get("email")
+        username = request.form.get("username")
         password = request.form.get("password")
+        confirm_password = request.form.get("confrim_password")
         if not name or not email or not password :
             return render_template("error.html", message="must provide all required information")
-        check =  db.execute("SELECT * FROM users WHERE email = :email",{"email": email}).rowcount
+        if password != confirm_password :
+             return render_template("error.html", message="Please insert the same password in confirm password cell")
+        check =  db.execute("SELECT * FROM users WHERE username = :username",{"username": username}).rowcount
         if check != 0 :
-            return render_template("error.html", message="email is already existing")
-        db.execute("INSERT INTO users (name,email,password)VALUES(:name,:email,:password)",{"name":name,"email":email,"password":password}) 
+            return render_template("error.html", message="Username is taken")
+        db.execute("INSERT INTO users (username,password)VALUES(:username,:password)",{"name":username,"password":password}) 
         db.commit()
         return render_template("login.html")
     else:

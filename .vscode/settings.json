@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "C:\\Users\\Dell\\AppData\\Local\\Programs\\Python\\Python38-32\\python.exe",
+    "python.pythonPath": "f:\\Programming\\Projects\\Project1\\env\\Scripts\\python.exe",
     "python.linting.pylintArgs": ["--load-plugins", "pylint-flask", "pyling-flask-sqlalchemy"]
 }
 
