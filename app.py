@@ -1,22 +1,24 @@
-import os, json, requests
+import os, json, requests 
 
 
+from models import *
 from flask import Flask, session, redirect, render_template, request, jsonify,url_for
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+from werkzeug.security import check_password_hash, generate_password_hash
 
-# Check for environment variable
-#if not os.getenv("DATABASE_URL"):
- #  raise RuntimeError("DATABASE_URL is not set")
 
 # Configure session to use filesystem
 app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
+app.config['SECRET_KEY'] = 'redsfsfsfsfis'
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgres://ijionxqqbadvfc:94f779624969db0fd8bcd094b485e4bd5197d0e9f24f8dbabcdd6a9dcafc944c@ec2-52-87-135-240.compute-1.amazonaws.com:5432/depl9ide9dik0r"
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+db.init_app(app)
 Session(app)
-engine = create_engine("postgres://ijionxqqbadvfc:94f779624969db0fd8bcd094b485e4bd5197d0e9f24f8dbabcdd6a9dcafc944c@ec2-52-87-135-240.compute-1.amazonaws.com:5432/depl9ide9dik0r")
-db = scoped_session(sessionmaker(bind=engine))
+
 
 @app.route("/")
 def index():
@@ -30,15 +32,14 @@ def login():
         password = request.form.get("password")
         if not username or not password :
             return render_template("error.html", message="must provide all required information")
-        check =  db.execute("SELECT COUNT(*) FROM users WHERE username = :username",{"username": username})
-        if check == 0:
-            return render_template("error.html", message="You Must sign up First")   
-        user = db.execute("SELECT * FROM users WHERE email = :email",{"email": email})
-        user =user.fetchall()
-        if user[0].password!=  password:
+        user = User.query.filter_by(username=username).first()
+        if user is None:
+            return render_template("error.html", message="You Must sign up First")  
+    
+        if not check_password_hash(user.password,password):
             return render_template("error.html", message="Password is incorrect")
-        session['user_id'] = user[0].id
-        session["user_name"] = user[0].name
+        session['user_id'] = user.id
+        session["user_name"] = user.username
         return redirect("/search" )
     else :
         if 'user_id' in session:
@@ -53,15 +54,18 @@ def register():
         username = request.form.get("username")
         password = request.form.get("password")
         confirm_password = request.form.get("confrim_password")
-        if not name or not email or not password :
+        if not username or not password or not confirm_password :
             return render_template("error.html", message="must provide all required information")
         if password != confirm_password :
              return render_template("error.html", message="Please insert the same password in confirm password cell")
-        check =  db.execute("SELECT * FROM users WHERE username = :username",{"username": username}).rowcount
+        check = User.query.filter_by(username=username).count()     
         if check != 0 :
             return render_template("error.html", message="Username is taken")
-        db.execute("INSERT INTO users (username,password)VALUES(:username,:password)",{"name":username,"password":password}) 
-        db.commit()
+
+        hashedPassword = generate_password_hash(password, method='pbkdf2:sha256', salt_length=8) 
+        user = User(username=username , password=hashedPassword)
+        db.session.add(user)
+        db.session.commit()
         return render_template("login.html")
     else:
          return render_template("register.html")    

@@ -60,7 +60,7 @@ html, body  {
     margin-bottom: 60px;
     padding : 20px 12px;
     border-radius: 25px;
-    border: 2px solid #73AD21;
+    border: 2px solid #21ad737a;
     background-color: #dee2e685;
 }
 
@@ -98,7 +98,7 @@ html, body  {
 
 .footer .row{
     width: 232px;
-    margin: 20px auto;
+    margin: 16px auto;
 }
 
 .footer img{
