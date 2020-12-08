@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "C:\\Users\\Dell\\Anaconda3\\python.exe",
+    "python.pythonPath": "C:\\Users\\Dell\\.virtualenvs\\project1-vPg-4-9t\\Scripts\\python.exe",
     "python.linting.pylintArgs": ["--load-plugins", "pylint-flask", "pyling-flask-sqlalchemy"]
 }
 

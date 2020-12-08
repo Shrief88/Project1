@@ -4,7 +4,7 @@ import os, json, requests
 from models import *
 from flask import Flask, session, redirect, render_template, request, jsonify,url_for
 from flask_session import Session
-from sqlalchemy import create_engine
+from sqlalchemy import or_
 from sqlalchemy.orm import scoped_session, sessionmaker
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -73,15 +73,28 @@ def register():
 @app.route("/search" , methods=["GET", "POST"])
 def search():
     if request.method == "POST" :
-        book = request.form.get("book")
-        if not book:
+        search_input = request.form.get("search_input")
+        if not search_input:
             return render_template("error.html", message="must provide all required information")
-        book = book.title() #Capitalize all words of input for search    
-        books = db.execute("SELECT * FROM books where isbn=:book or title=:book or author=:book",{"book":book})
-        if books.rowcount == 0:
+        search_input = search_input.title() #Capitalize all words of input for search    
+        book = Book.query.filter(or_(Book.isbn==search_input,Book.title==search_input)).first()
+        author = Author.query.filter_by(name=search_input).first()
+
+        if book is None and author is None:
             return render_template("error.html", message="we can't find books with that description.")
-        books=books.fetchall()    
-        return render_template("results.html", books=books , book=book)    
+
+        if author is None and book is not None:
+            return redirect(url_for('book',book_isbn = book.isbn))
+
+        if author is not None and book is None:
+            books = author.books
+            return render_template("results.html", books=books , search_input=search_input) 
+
+        ##if author is not None and book is not None: 
+        ##    books = author.books
+        ##    books.append()    
+
+
     else:
         if 'user_id' in session:
             return render_template("index.html" , user_name = session["user_name"])
@@ -96,10 +109,9 @@ def logout():
 def book(book_isbn):
     if  'user_id' not in session:
             return render_template("index.html")
-    book = db.execute("SELECT * FROM books WHERE isbn = :isbn", {"isbn": book_isbn})
-    if book.rowcount == 0:
+    book = Book.query.filter_by(isbn=book_isbn).first
+    if book is None:
         return render_template("error.html", message="No such book.")
-    book = book.fetchall()
     if request.method == "POST" :
         user_id = session['user_id']
         book_id = book[0].id
