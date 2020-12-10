@@ -109,7 +109,8 @@ def logout():
 def book(book_isbn):
     if  'user_id' not in session:
             return render_template("index.html")
-    book = Book.query.filter_by(isbn=book_isbn).first
+    book = Book.query.filter_by(isbn=book_isbn).first()
+    
     if book is None:
         return render_template("error.html", message="No such book.")
     if request.method == "POST" :
@@ -130,7 +131,8 @@ def book(book_isbn):
     res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": KEY, "isbns": book_isbn})
     res = res.json()
     res = res['books'][0]
-    reviews = db.execute("SELECT * FROM reviews WHERE book_id = :book_id", {"book_id": book[0].id}).fetchall()
+
+    reviews = Review.query.filter_by(book_id = book.id).all()
     return render_template("book.html", book=book , res=res , reviews=reviews , user_name=session["user_name"], user_id =session['user_id'])
 
 

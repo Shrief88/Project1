@@ -1,4 +1,4 @@
-import os
+
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
@@ -21,13 +21,18 @@ adding_Book = db.Table('add_book',
 )
 
 #many to many relation between books and users
-Review=db.Table('review',
-    db.Column('user_id',db.Integer, db.ForeignKey("users.id"), nullable=True), 
-    db.Column('book_id',db.Integer, db.ForeignKey("books.id"), nullable=True), 
-    db.Column('body',db.String(100), nullable=False),
-    db.Column('rating',db.Float, nullable=False)
-)
-     
+class Review(db.Model):
+    __tablename__="reviews"
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"),primary_key=True, nullable=False)
+    book_id = db.Column(db.Integer, db.ForeignKey("books.id"),primary_key=True, nullable=False)
+    body = db.Column(db.String(10000), nullable=False)
+    rating = db.Column(db.Float,nullable=False)
+    book = db.relationship("Book")
+
+    def __init__(self, book, rating , body):
+        self.book = book
+        self.rating = rating
+        self.body = body
 
 
 class Book(db.Model):
@@ -38,7 +43,7 @@ class Book(db.Model):
     author_id = db.Column(db.Integer,db.ForeignKey("authors.id"),nullable=False)  #one to many relation between books and authors
     year = db.Column(db.String(4), nullable=False)
     users= db.relationship('User', secondary='add_book', backref='books')
-    reviews = db.relationship('User', secondary='review', backref='reviews')
+
 
 
 class User(db.Model):
@@ -46,6 +51,8 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), nullable=False)  
     password = db.Column(db.String(100), nullable=False) 
+    reviews = db.relationship("Review", backref="books")
+  
     
 
 
