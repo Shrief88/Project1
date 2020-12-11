@@ -1,5 +1,13 @@
 import requests
-KEY = "fX6308bR8BeCJQH44PoRg"
-res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": KEY, "isbns": "1416949658"})
-print(res)
+KEY = "AIzaSyCRyv79bp9XdhdY4fW46dKAwwWZLznorIA"
+isbn = "1451648537"
+link = "https://www.googleapis.com/books/v1/volumes?q=isbn:"
+link = link+isbn;
+print(link)
 
+
+res = requests.get(link)
+res = res.json()
+res = res['items'][0]
+
+print(res['volumeInfo']['averageRating'])

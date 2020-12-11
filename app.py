@@ -114,23 +114,22 @@ def book(book_isbn):
     if book is None:
         return render_template("error.html", message="No such book.")
     if request.method == "POST" :
-        user_id = session['user_id']
-        book_id = book[0].id
-        reviews = db.execute("SELECT * FROM reviews WHERE user_id = :user_id and book_id= :book_id" , {"user_id": user_id,"book_id":book_id}).rowcount
-        if reviews != 0 :
-           return render_template("error.html", message="you have reviewed this book before") 
-        else:    
-          body = request.form.get("review")
-          rating = request.form.get("rating")
-          if not body or not rating :
-                return render_template("error.html", message="must provide all required information")
-          db.execute("INSERT INTO reviews(body,user_id,book_id,rating)VALUES(:body,:user_id,:book_id,:rating)",{"body":body,"user_id":user_id,"book_id":book_id,"rating":rating}) 
-          db.commit()
-          return redirect(url_for('book',book_isbn = book_isbn))
-    KEY = "fX6308bR8BeCJQH44PoRg"
-    res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": KEY, "isbns": book_isbn})
+        user_id = session['user_id']  
+        body = request.form.get("review")
+        rating = request.form.get("rating")
+        if not body or not rating :
+            return render_template("error.html", message="must provide all required information")
+
+        user = User.query.filter_by(id=user_id).first()
+        user.reviews.append(Review(book,rating,body))    
+        db.session.commit()
+        return redirect(url_for('book',book_isbn = book_isbn))
+
+    google_api = "https://www.googleapis.com/books/v1/volumes?q=isbn:"
+    google_api = google_api + book_isbn
+    res = requests.get(google_api)
     res = res.json()
-    res = res['books'][0]
+    res = res['items'][0]
 
     reviews = Review.query.filter_by(book_id = book.id).all()
     return render_template("book.html", book=book , res=res , reviews=reviews , user_name=session["user_name"], user_id =session['user_id'])

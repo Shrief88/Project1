@@ -1,1 +1,1 @@
-check = Author.query.filter_by(name=author).count()
+book

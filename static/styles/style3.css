@@ -1,21 +1,73 @@
-.container{
-  margin-top: 1%;
+*{
+  margin: 0;
+  padding: 0;
 }
 
-body{
-  background-color: white;
+html, body  {
+  width: 100%;
+  height: 100%;
 }
+
+.container{
+  min-height: 100%;
+  margin-top: 8px;
+}
+
+
+/**********************************navbar*****************************/
+.nav-link{
+  font-size: large;
+}
+
+
+/*****************header***********************/
+
+.nav{
+  background-color:#e9ecef!important ;
+  height: 70px;
+}
+.navbar-brand{
+  line-height: 55px;
+  margin-left: 15px;
+}
+
+.btn.btn-outline-success.my-2.my-sm-0{
+ margin-top: 18px !important;
+ margin-right: 7px;
+}
+
+@media only screen and (min-width: 550px) {
+  .btn.btn-outline-success.my-2.my-sm-0{
+      margin-right: 30px;
+   }
+}
+
+@media only screen and (max-width: 300px) {
+  .nav p{
+      font-size: 18px;
+  }
+}
+
+
 
 #book{
   margin-left: 35%;
 }
 
-.mb-3{
-  margin-left: 0;
-}
-
 .row.book-container{
    margin-top: 3%;
+}
+
+
+
+#description{
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+}
+
+.form-control{
+  margin-top: 2%;
+  margin-bottom: 3%;
 }
 
 .custom-select{
@@ -31,24 +83,7 @@ body{
   margin-right: 45%;
 }
 
-.form-control{
-  margin-top: 2%;
-  margin-bottom: 3%;
-}
 
 
 
-.container.results-container{
-  display: flex;
-  flex-wrap: wrap;
-}
 
-.card.border-primary.mb-3{
-  margin-right: 2%;
-  margin-left: 2%;
-}
-
-.row.book-container{
-  display: flex;
-  flex-wrap: wrap;
-}
