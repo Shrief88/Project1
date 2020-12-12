@@ -74,21 +74,21 @@
     </form>
     
     <hr>
+    <div class = "reviews">
+        <h4>Reviews from Other users: </h4>
     
-    <h4>Reviews from Other users: </h4>
-    
-    {% for review in reviews %}
+        {% for review in reviews %}
       
-    <textarea class="form-control" name="review" id="exampleFormControlTextarea1" rows="5" disabled>
-    from user ({{user_name}}) :
-    {{review.body}}
-    
-    Rating: {{review.rating}}
-    </textarea>
-    
-    {% endfor %}
-    {% endblock %}
+        <textarea class="form-control" name="review" id="textarea" rows="4" disabled>
+        from user ({{review.books.username}}) :
+        {{review.body}}
 
+        Rating: {{review.rating}}
+        </textarea>
+    
+        {% endfor %}
+        {% endblock %}
+    </div>
 </div>    
 
 

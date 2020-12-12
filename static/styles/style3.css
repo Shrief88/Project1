@@ -11,7 +11,7 @@ html, body  {
 .container{
   min-height: 100%;
   margin-top: 8px;
-}
+}  
 
 
 /**********************************navbar*****************************/
@@ -55,7 +55,11 @@ html, body  {
 }
 
 .row.book-container{
-   margin-top: 3%;
+   margin-top: 20px;
+}
+
+.col-sm-6{
+  margin-bottom: 8px;
 }
 
 
@@ -66,8 +70,8 @@ html, body  {
 }
 
 .form-control{
-  margin-top: 2%;
-  margin-bottom: 3%;
+  margin-top: 5px;
+  margin-bottom: 10px;
 }
 
 .custom-select{
@@ -77,11 +81,12 @@ html, body  {
 }
 
 #submit{
-  width: 10%;
-  margin-top: 2%;
-  margin-left: 45%;
-  margin-right: 45%;
+  width: 80px;
+  margin: 13px auto;
+  display: block;
 }
+
+
 
 
 
